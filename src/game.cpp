@@ -6,11 +6,19 @@
 Game::Game()
 {
     // Implement your code here
+    m_board = new Board(10, 10);
+    m_frameCount = 0;
+    m_score = 0;
+    m_gameOver = false;
 }
 
 Game::~Game()
 {
     // Implement your code here
+    if (m_board != nullptr)
+    {
+        delete m_board;
+    }
 }
 
 void Game::update(const Controller &controller)
