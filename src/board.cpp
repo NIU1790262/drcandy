@@ -11,12 +11,38 @@ Board::Board(int width, int height)
 	// Implement your code here
 	m_width = width;
 	m_height = height;
-	m_board.resize(m_height, vector<Candy*>(m_width, nullptr));
+	m_board = new Candy**[width];
+	for (int y = 0; y < height; y++)
+	{
+		m_board[y] = new Candy*[height];
+		for (int x = 0; x < width; x++)
+		{
+			m_board[y][x] = nullptr;
+		}
+	}
 }
 
 Board::~Board()
 {
 	// Implement your code here
+	for (int y = 0; y < m_height; y++)
+	{
+		for (int x = 0; x < m_width; x++)
+		{
+			if (m_board[y][x] != nullptr)
+			{
+				delete m_board[y][x];
+			}
+		}
+		if (m_board[y] != nullptr)
+		{
+			delete[] m_board[y];
+		}
+	}
+	if (m_board != nullptr)
+	{
+		delete m_board;
+	}
 }
 
 Candy* Board::getCell(int x, int y) const

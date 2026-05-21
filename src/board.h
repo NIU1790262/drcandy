@@ -91,7 +91,7 @@ private:
     /// Students can add as many protected methods and attributes as needed.
     int m_width;
     int m_height;
-    std::vector<std::vector<Candy*>> m_board;
+    Candy*** m_board;
 };
 
 #endif
