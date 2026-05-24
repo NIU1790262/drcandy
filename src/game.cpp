@@ -2,6 +2,7 @@
 #include <random>
 #include "graphics.h"
 #include "candy.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -77,5 +78,16 @@ bool Game::load(const std::string &input_path)
 bool Game::operator==(const Game &other) const
 {
     // Implement your code here
+    bool equalGame = m_score == other.m_score && m_frameCount == other.m_frameCount && m_gameOver == other.m_gameOver;
+    for (int y = 0; y < m_board->getHeight() && equalGame; y++)
+    {
+        for (int x = 0; x < m_board->getWidth() && equalGame; x++)
+        {
+            if (m_board->getCell(x, y) != other.m_board->getCell(x, y))
+            {
+                equalGame = false;
+            }
+        }
+    }
     return false;
 }
