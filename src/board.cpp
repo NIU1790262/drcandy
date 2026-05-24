@@ -250,12 +250,13 @@ bool Board::dump(const string& output_path) const
 			{
 				candyType = (int)currCandy->getType();
 			}
-			file << candyType << endl;
+			file << candyType << " ";
 			if (!file.good())
 			{
 				return false;
 			}
 		}
+		file << endl;
 	}
 	file.close();
 	return true;
