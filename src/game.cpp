@@ -3,6 +3,7 @@
 #include "graphics.h"
 #include "candy.h"
 #include <iostream>
+#include <fstream>
 
 Game::Game()
 {
@@ -66,13 +67,27 @@ void Game::run()
 bool Game::dump(const std::string &output_path) const
 {
     // Implement your code here
-    return false;
+    bool dumpedGame = false;
+    ofstream file(output_path);
+    if (file.is_open())
+    {
+        file << m_frameCount << " " << m_score << " " << m_gameOver << endl;
+        dumpedGame = m_board->dump(output_path);
+    }
+    return dumpedGame;
 }
 
 bool Game::load(const std::string &input_path)
 {
     // Implement your code here
-    return false;
+    bool loadedGame = false;
+    ifstream file(input_path);
+    if (file.is_open())
+    {
+        file >> m_frameCount >> m_score >> m_gameOver;
+        loadedGame = m_board->load(input_path);
+    }
+    return loadedGame;
 }
 
 bool Game::operator==(const Game &other) const
