@@ -4,6 +4,7 @@
 #include "candy.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 Game::Game()
 {
@@ -31,7 +32,6 @@ void Game::update(const Controller &controller)
 void Game::render(GraphicManager &graphics)
 {
     // Implement your code here
-
     // Note: the following code exhibits the main graphic library features
     // Board: border [draw rectangles] and a single piece of candy
     const int board_size = 10;
@@ -42,16 +42,27 @@ void Game::render(GraphicManager &graphics)
         CANDY_IMAGE_HEIGHT * board_size,
         5, 150, 150, 150);
     // Board: place a candy piece
-    graphics.drawImage(Candy(CandyType::TYPE_PURPLE).getResourceName(),
-                       CANDY_IMAGE_WIDTH * 3,
-                       CANDY_IMAGE_HEIGHT * 3);
+    for (int y = 0; y < m_board->getHeight(); y++)
+    {
+        for (int x = 0; x < m_board->getWidth(); x++)
+        {
+            Candy* currCandy = m_board->getCell(x, y);
+            if (currCandy != nullptr)
+            {
+                int posX = (x + board_padding) * CANDY_IMAGE_WIDTH;
+                int posY = (y + board_padding) * CANDY_IMAGE_HEIGHT;
+                graphics.drawImage(currCandy->getResourceName(), posX, posY);
+            }
+        }
+    }
     // Title [draw images]
     graphics.drawImage("img/logo_small.png", 10, 10);
     // Score and footer [draw text]
     graphics.drawText("Movement: [Up] [Down] [Left] [Right]  --  "
                       "Buttons: [Q] [W] [E]  --  Exit [ESC]",
                       25, 700, 20, 100, 100, 100);
-    graphics.drawText("Score: ", 450, 10, 70, 125, 200, 125);
+    string scoreText = "Score: " + to_string(m_score);
+    graphics.drawText(scoreText, 500, 30, 32, 125, 200, 125);
 }
 
 void Game::run()
